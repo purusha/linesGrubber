@@ -38,6 +38,12 @@ local.properties
 # sbteclipse plugin
 .target
 
+# Maven
+target/
+
+# Idea
+.idea/
+
 # Tern plugin
 .tern-project
 
