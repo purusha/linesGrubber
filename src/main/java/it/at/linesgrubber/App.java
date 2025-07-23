@@ -30,23 +30,29 @@ public class App {
         public void run() {
 
             if (! root.isDirectory() || ! root.exists() || ! isReadable(root)) {
-                System.out.printf("Root directory must be a valid and readable directory: %s", root.getPath());
+                System.out.println("Root directory must be a valid and readable directory: " + root.getPath());
             }
 
             if (! proto.isFile() || ! proto.exists() || ! isReadable(proto)) {
-                System.out.printf("Proto file must be a valid and readable file: %s", proto.getPath());
+                System.out.println("Proto file must be a valid and readable file: " + proto.getPath());
             }
 
             final ProtoParser parser = new ProtoParser(root, proto);
 
             final UUID uuid = UUID.randomUUID();
+            //create new file in root directory with these uuid
 
-
-
+            System.out.println("grab data using thse configuration:");
+            parser.getData().stream()
+                .forEach(e -> {
+                    System.out.println(e.toString());
+                });
         }
 
-        private boolean isReadable(File file) {
-            return Files.isReadable(file.toPath());
-        }
     }
+
+    public static boolean isReadable(File file) {
+        return Files.isReadable(file.toPath());
+    }
+
 }
