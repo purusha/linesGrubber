@@ -120,29 +120,33 @@ public class ProtoParser {
     }
 
     private Optional<Range<Integer>> extractRange(String line) {
-        final int i = StringUtils.countMatches(line, V);
+        final int countOf = StringUtils.countMatches(line, V);
 
-        if (i > 1) {
+        if (countOf > 1) {
             return Optional.empty();
         }
 
-        final String[] split = StringUtils.split(line, V);
+        final String[] values = StringUtils.split(line, V);
         Range<Integer> range = null;
 
-        if (split.length == 1) {
-            final String start = StringUtils.trim(split[0]);
+        if (values.length >= 1) {
+            if (values.length == 1) {
+                final String start = StringUtils.trim(values[0]);
 
-            range = Range.of(Integer.parseInt(start), Integer.MAX_VALUE);
-        } else {
-            final String start = StringUtils.trim(split[0]);
-            final String end = StringUtils.trim(split[1]);
+                if (StringUtils.isNumeric(start)) {
+                    range = Range.of(Integer.parseInt(start), Integer.MAX_VALUE);
+                }
+            } else {
+                final String start = StringUtils.trim(values[0]);
+                final String end = StringUtils.trim(values[1]);
 
-            if (StringUtils.isNumeric(start) && StringUtils.isNumeric(end)) {
-                final int i1 = Integer.parseInt(start);
-                final int i2 = Integer.parseInt(end);
+                if (StringUtils.isNumeric(start) && StringUtils.isNumeric(end)) {
+                    final int i1 = Integer.parseInt(start);
+                    final int i2 = Integer.parseInt(end);
 
-                if (i1 <= i2) {
-                    range = Range.of(i1, i2);
+                    if (i1 <= i2) {
+                        range = Range.of(i1, i2);
+                    }
                 }
             }
         }
