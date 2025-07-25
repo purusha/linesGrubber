@@ -64,7 +64,7 @@ public class ProtoParser {
             throw new RuntimeException(e);
         }
 
-        //step3: merge overlapped ranges
+        //step3: merge overlapped ranges (if exists)
         this.data = tmp.stream()
             .map(fr -> {
                 final FileRange fileRange = new FileRange(fr.getFile());
