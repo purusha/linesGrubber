@@ -10,6 +10,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -80,13 +81,18 @@ public class App {
 
         private void append(ProtoParser.FileRange fr, File file) throws IOException {
             if(fr.getRanges().isEmpty()) {
+                Files.write(file.toPath(), "\n".getBytes(), StandardOpenOption.APPEND);
+
                 Files.write(
                     file.toPath(),
                     Files.readAllLines(fr.getFile()),
-                    StandardCharsets.UTF_8
+                    StandardCharsets.UTF_8,
+                    StandardOpenOption.APPEND
                 );
             } else {
                 for(Range<Integer> r : fr.getRanges()) {
+                    Files.write(file.toPath(), "\n".getBytes(), StandardOpenOption.APPEND);
+
                     Files.write(
                         file.toPath(),
                         Files
@@ -94,7 +100,8 @@ public class App {
                             .skip(r.getMinimum() - 1)
                             .limit(r.getMaximum() - r.getMinimum() + 1)
                             .collect(Collectors.toList()),
-                        StandardCharsets.UTF_8
+                        StandardCharsets.UTF_8,
+                        StandardOpenOption.APPEND
                     );
                 }
             }
