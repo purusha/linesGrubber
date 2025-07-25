@@ -82,7 +82,8 @@ public class App {
             if(fr.getRanges().isEmpty()) {
                 Files.write(
                     file.toPath(),
-                    Files.readAllLines(fr.getFile())
+                    Files.readAllLines(fr.getFile()),
+                    StandardCharsets.UTF_8
                 );
             } else {
                 for(Range<Integer> r : fr.getRanges()) {
@@ -92,7 +93,8 @@ public class App {
                             .lines(fr.getFile(), StandardCharsets.UTF_8)
                             .skip(r.getMinimum() - 1)
                             .limit(r.getMaximum() - r.getMinimum() + 1)
-                            .collect(Collectors.toList())
+                            .collect(Collectors.toList()),
+                        StandardCharsets.UTF_8
                     );
                 }
             }
